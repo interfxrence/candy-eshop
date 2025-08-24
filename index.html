@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sladká cukrárna - Nejlepší cukrovinky online</title>
+    <meta name="description" content="Sladká cukrárna nabízí nejkvalitnější čokolády, bonbony, karamely a sušenky. Rychlé dodání po celé České republice. Objednejte si sladkosti online!">
+    <meta name="keywords" content="cukrárna, čokoláda, bonbony, karamely, sušenky, sladkosti, online obchod, česká cukrárna">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #4a3728;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #8b4513 0%, #5d2f0a 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .cart-button {
+            background: #e67e22;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .cart-button:hover {
+            background: #d35400;
+            transform: scale(1.05);
+        }
+
+        .cart-count {
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.8rem;
+            position: absolute;
+            top: -0.5rem;
+            right: -0.5rem;
+            min-width: 1.5rem;
+            text-align: center;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page {
+            display: none;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #8b4513;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #a0522d;
+            margin: 2rem 0 1rem 0;
+            font-size: 2rem;
+            border-bottom: 3px solid #e67e22;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #8b4513;
+            margin: 1.5rem 0 0.5rem 0;
+            font-size: 1.5rem;
+        }
+
+        .hero {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,234,167,0.9) 100%);
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #8b4513 0%, #d2691e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #6b4423;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(230,126,34,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(230,126,34,0.4);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border-color: #e67e22;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #8b4513 0%, #d2691e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="80" r="2.5" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #8b4513;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e67e22;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(46,204,113,0.3);
+        }
+
+        .add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46,204,113,0.4);
+        }
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #8b4513;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e67e22;
+            box-shadow: 0 0 10px rgba(230,126,34,0.2);
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230,126,34,0.3);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            background: white;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-total {
+            background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            background: #e67e22;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #d35400;
+            transform: scale(1.1);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, #8b4513 0%, #d2691e 100%);
+            border-radius: 15px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .info-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .info-card h3 {
+            color: #e67e22;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .about-content,
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🍫 Sladká cukrárna</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')">Domů</a></li>
+                <li><a href="#" onclick="showPage('products')">Produkty</a></li>
+                <li><a href="#" onclick="showPage('about')">O nás</a></li>
+                <li><a href="#" onclick="showPage('contact')">Kontakt</a></li>
+                <li><a href="#" onclick="showPage('cart')" class="cart-button">
+                    🛒 Košík
+                    <span class="cart-count" id="cartCount">0</span>
+                </a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div id="home" class="page active">
+            <div class="hero">
+                <h1>Vítejte v naší sladké cukrárně!</h1>
+                <p>Objevte nejkvalitnější čokolády, bonbony a sladkosti vyrobené s láskou</p>
+                <a href="#" onclick="showPage('products')" class="cta-button">Prohlédnout produkty</a>
+            </div>
+            
+            <h2>Proč si vybrat naši cukrárnu?</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>🍯 Tradiční recepty</h3>
+                    <p>Používáme pouze ověřené rodinné recepty předávané generacemi. Každá sladkost je vyrobena s péčí a láskou k detailu.</p>
+                    
+                    <h3>🌱 Kvalitní suroviny</h3>
+                    <p>Vybíráme jen ty nejlepší suroviny od ověřených dodavatelů. Žádné umělé přísady nebo konzervační látky.</p>
+                </div>
+                <div class="about-image">
+                    🧁
+                </div>
+            </div>
+            
+            <h2>Nejoblíbenější produkty</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">🍫</div>
+                    <div class="product-info">
+                        <div class="product-name">Mléčná čokoláda</div>
+                        <div class="product-description">Klasická mléčná čokoláda 100g</div>
+                        <div class="product-price">29,90 Kč</div>
+                        <button class="add-to-cart" onclick="addToCart(1, 'Mléčná čokoláda', 29.90)">
+                            Přidat do košíku
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">🍬</div>
+                    <div class="product-info">
+                        <div class="product-name">Ovocný mix bonbonů</div>
+                        <div class="product-description">Různé ovocné příchutě</div>
+                        <div class="product-price">59,90 Kč</div>
+                        <button class="add-to-cart" onclick="addToCart(3, 'Ovocný mix bonbonů', 59.90)">
+                            Přidat do košíku
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="products" class="page">
+            <h1>Naše produkty</h1>
+            
+            <h2>Čokolády</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">🍫</div>
+                    <div class="product-info">
+                        <div class="product-name">Mléčná čokoláda</div>
+                        <div class="product-description">Klasická mléčná čokoláda 100g</div>
+                        <div class="product-price">29,90 Kč</div>
+                        <button class="add-to-cart" onclick="addToCart(1, 'Mléčná čokoláda', 29.90)">
+                            Přidat do košíku
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">🍫</div>
+                    <div class="product-info">
+                        <div class="product-name">Hořká čokoláda 70%</div>
+                        <div class="product-description">Hořká čokoláda s 70% kakaa</div>
+                        <div class="product-price">34,90 Kč</div>
+                        <button class="add-to-cart" onclick="addToCart(2, 'Hořká čokoláda 70%', 34.90)">
+                            Přidat do košíku
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Bonbony a karamely</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">🍬</div>
+                    <div class="product-info">
+                        <div class="product-name">Ovocný mix bonbonů</div>
+                        <div class="product-description">Různé ovocné příchutě</div>
+                        <div class="product-price">59,90 Kč</div>
+                        <button class="add-to-cart" onclick="addToCart(3, 'Ovocný mix bonbonů', 59.90)">
+                            Přidat do košíku
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">🍯</div>
+                    <div class="product-info">
+                        <div class="product-name">Slaný karamel</div>
+                        <div class="product-description">Měkký karamel s mořskou solí</div>
+                        <div class="product-price">79,90 Kč</div>
+                        <button class="add-to-cart" onclick="addToCart(4, 'Slaný karamel', 79.90)">
+                            Přidat do košíku
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">🐻</div>
+                    <div class="product-info">
+                        <div class="product-name">Gumové medvídky</div>
+                        <div class="product-description">Ovocné gumové medvídky 200g</div>
+                        <div class="product-price">49,90 Kč</div>
+                        <button class="add-to-cart" onclick="addToCart(6, 'Gumové medvídky', 49.90)">
+                            Přidat do košíku
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Sušenky a sezónní produkty</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">🍪</div>
+                    <div class="product-info">
+                        <div class="product-name">Čokoládové cookies</div>
+                        <div class="product-description">Balení 12 kusů sušenek</div>
+                        <div class="product-price">89,90 Kč</div>
+                        <button class="add-to-cart" onclick="addToCart(5, 'Čokoládové cookies', 89.90)">
+                            Přidat do košíku
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">🎄</div>
+                    <div class="product-info">
+                        <div class="product-name">Vánoční perník</div>
+                        <div class="product-description">Tradiční perníkové balení</div>
+                        <div class="product-price">99,90 Kč</div>
+                        <button class="add-to-cart" onclick="addToCart(7, 'Vánoční perník', 99.90)">
+                            Přidat do košíku
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="about" class="page">
+            <h1>O naší cukrárně</h1>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Naše historie</h2>
+                    <p>Sladká cukrárna byla založena v roce 1995 jako rodinný podnik s tradicí výroby kvalitních sladkostí. Za více než 25 let působení jsme si vybudovali pevnou pozici na českém trhu a získali důvěru tisíců spokojených zákazníků po celé České republice.</p>
+                    
+                    <h3>Naše mise</h3>
+                    <p>Věříme, že každá sladkost by měla být malým svátkem. Proto se zaměřujeme na kvalitu před kvantitou a používáme pouze ty nejlepší suroviny dostupné na trhu.</p>
+                    
+                    <h3>Kvalita a tradice</h3>
+                    <p>Všechny naše produkty vyrábíme podle tradičních receptů, které jsme zdokonalovali generacemi. Kombinujeme tradiční postupy s moderními technologiemi pro dosažení té nejlepší chuti a kvality.</p>
+                </div>
+                <div class="about-image">
+                    👨‍🍳
+                </div>
+            </div>
+            
+            <h2>Proč si vybrat nás?</h2>
+            <div class="contact-info">
+                <div class="info-card">
+                    <h3>🏆 Kvalita</h3>
+                    <p>Používáme pouze prémiové suroviny od ověřených dodavatelů. Žádné umělé přísady nebo levné náhražky.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🚚 Rychlé dodání</h3>
+                    <p>Vaše objednávka bude expedována do 24 hodin a doručena do 2-3 pracovních dnů po celé ČR.</p>
+                </div>
+                <div class="info-card">
+                    <h3>💝 Osobní přístup</h3>
+                    <p>Každý zákazník je pro nás důležitý. Nabízíme individuální přístup a personalizované balení.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🌿 Ekologie</h3>
+                    <p>Dbáme na životní prostředí a používáme ekologické obaly a udržitelné výrobní procesy.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="contact" class="page">
+            <h1>Kontaktujte nás</h1>
+            
+            <div class="contact-info">
+                <div class="info-card">
+                    <h3>📍 Adresa</h3>
+                    <p>
+                        Sladká cukrárna s.r.o.<br>
+                        Cukrovarnická 123<br>
+                        110 00 Praha 1<br>
+                        Česká republika
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>📞 Kontakt</h3>
+                    <p>
+                        Telefon: +420 123 456 789<br>
+                        Email: info@sladkacukrarna.cz<br>
+                        Zákaznická linka: 800 123 456
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>🕐 Otevírací doba</h3>
+                    <p>
+                        Po - Pá: 8:00 - 18:00<br>
+                        So: 9:00 - 15:00<br>
+                        Ne: 10:00 - 14:00
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>🚚 Doprava</h3>
+                    <p>
+                        Česká pošta: 89 Kč<br>
+                        PPL: 119 Kč<br>
+                        Osobní odběr: Zdarma<br>
+                        Doprava zdarma nad 1000 Kč
+                    </p>
+                </div>
+            </div>
+
+            <h2>Napište nám</h2>
+            <div class="form-container">
+                <div class="success-message" id="contactSuccess">
+                    Děkujeme za vaši zprávu! Odpovíme vám do 24 hodin.
+                </div>
+                <form id="contactForm" onsubmit="submitContact(event)">
+                    <div class="form-group">
+                        <label for="contactName">Jméno a příjmení *</label>
+                        <input type="text" id="contactName" name="contactName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Email *</label>
+                        <input type="email" id="contactEmail" name="contactEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactPhone">Telefon</label>
+                        <input type="tel" id="contactPhone" name="contactPhone">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactSubject">Předmět</label>
+                        <select id="contactSubject" name="contactSubject">
+                            <option value="general">Obecný dotaz</option>
+                            <option value="order">Dotaz k objednávce</option>
+                            <option value="quality">Reklamace</option>
+                            <option value="cooperation">Spolupráce</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Zpráva *</label>
+                        <textarea id="contactMessage" name="contactMessage" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Odeslat zprávu</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="cart" class="page">
+            <h1>Váš košík</h1>
+            
+            <div id="cartItems">
+                <p style="text-align: center; color: #666; font-size: 1.2rem; margin: 3rem 0;">
+                    🛒 Váš košík je prázdný
+                </p>
+            </div>
+            
+            <div id="cartSummary" style="display: none;">
+                <div class="cart-total">
+                    Celkem: <span id="cartTotalAmount">0,00 Kč</span>
+                </div>
+                
+                <h2>Dokončit objednávku</h2>
+                <div class="form-container">
+                    <div class="success-message" id="orderSuccess">
+                        Děkujeme za vaši objednávku! Objednávka byla úspěšně odeslána a bude zpracována do 24 hodin.
+                    </div>
+                    <form id="orderForm" onsubmit="submitOrder(event)">
+                        <div class="form-group">
+                            <label for="firstName">Jméno *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Příjmení *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefon *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="street">Ulice a č.p. *</label>
+                            <input type="text" id="street" name="street" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Město *</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode">PSČ *</label>
+                            <input type="text" id="zipCode" name="zipCode" pattern="[0-9]{5}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="paymentType">Způsob platby *</label>
+                            <select id="paymentType" name="paymentType" required>
+                                <option value="">Vyberte způsob platby</option>
+                                <option value="Card">Platební karta</option>
+                                <option value="Bank Transfer">Bankovní převod</option>
+                                <option value="Cash">Dobírka</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="submit-button">Odeslat objednávku</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Sladká cukrárna. Všechna práva vyhrazena.</p>
+        <p>Kvalitní sladkosti s láskou vyrobené | Rychlé dodání po celé ČR</p>
+    </footer>
+
+    <script>
+        let cart = [];
+        let cartTotal = 0;
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            if (pageId === 'cart') {
+                updateCartDisplay();
+            }
+        }
+
+        function addToCart(productId, productName, price) {
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            updateCartCount();
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Přidáno! ✓';
+            button.style.background = 'linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)';
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = 'linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)';
+            }, 1500);
+        }
+
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        function changeQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartDisplay();
+                    updateCartCount();
+                }
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartDisplay();
+            updateCartCount();
+        }
+
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartSummary = document.getElementById('cartSummary');
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <p style="text-align: center; color: #666; font-size: 1.2rem; margin: 3rem 0;">
+                        🛒 Váš košík je prázdný
+                    </p>
+                `;
+                cartSummary.style.display = 'none';
+                return;
+            }
+            cartTotal = 0;
+            let cartHTML = '';
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                cartTotal += itemTotal;
+                cartHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            <span style="color: #666;">${item.price.toFixed(2)} Kč/ks</span>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="changeQuantity(${item.id}, -1)">-</button>
+                            <span style="margin: 0 1rem; font-weight: bold;">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="changeQuantity(${item.id}, 1)">+</button>
+                            <button class="quantity-btn" onclick="removeFromCart(${item.id})" style="background: #e74c3c; margin-left: 1rem;">🗑️</button>
+                        </div>
+                        <div style="font-weight: bold; color: #e67e22;">
+                            ${itemTotal.toFixed(2)} Kč
+                        </div>
+                    </div>
+                `;
+            });
+            cartItemsContainer.innerHTML = cartHTML;
+            document.getElementById('cartTotalAmount').textContent = cartTotal.toFixed(2) + ' Kč';
+            cartSummary.style.display = 'block';
+        }
+
+        async function submitContact(event) {
+            event.preventDefault();
+            const formData = {
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                phone: document.getElementById('contactPhone').value,
+                subject: document.getElementById('contactSubject').value,
+                message: document.getElementById('contactMessage').value
+            };
+            try {
+                const response = await fetch('submit_contact.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    document.getElementById('contactSuccess').style.display = 'block';
+                    document.getElementById('contactForm').reset();
+                    setTimeout(() => {
+                        document.getElementById('contactSuccess').style.display = 'none';
+                    }, 5000);
+                } else {
+                    alert('Chyba při odesílání: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Chyba:', error);
+                alert('Došlo k chybě při odesílání zprávy. Zkuste to později.');
+            }
+        }
+
+        async function submitOrder(event) {
+            event.preventDefault();
+            if (cart.length === 0) {
+                alert('Váš košík je prázdný!');
+                return;
+            }
+            const orderData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                street: document.getElementById('street').value,
+                city: document.getElementById('city').value,
+                zipCode: document.getElementById('zipCode').value,
+                paymentType: document.getElementById('paymentType').value,
+                items: cart,
+                total: cartTotal
+            };
+            const submitButton = event.target.querySelector('.submit-button');
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Odesílám objednávku...';
+            submitButton.disabled = true;
+            try {
+                const response = await fetch('submit_order.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    document.getElementById('orderSuccess').innerHTML = `
+                        <strong>Děkujeme za vaši objednávku!</strong><br>
+                        Číslo objednávky: <strong>#${result.order_id}</strong><br>
+                        Celková částka: <strong>${result.total.toFixed(2)} Kč</strong><br>
+                        Objednávka bude zpracována do 24 hodin a odeslána na vaši adresu.
+                    `;
+                    document.getElementById('orderSuccess').style.display = 'block';
+                    document.getElementById('orderForm').reset();
+                    cart = [];
+                    updateCartCount();
+                    updateCartDisplay();
+                    document.getElementById('cart').scrollIntoView({ behavior: 'smooth' });
+                    setTimeout(() => {
+                        document.getElementById('orderSuccess').style.display = 'none';
+                    }, 15000);
+                } else {
+                    alert('Chyba při zpracování objednávky: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Chyba:', error);
+                alert('Došlo k chybě při odesílání objednávky. Zkuste to později.');
+            } finally {
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }
+        }
+
+        async function loadProductsFromDatabase() {
+            try {
+                const response = await fetch('get_products.php');
+                const result = await response.json();
+                if (result.success && result.products) {
+                    console.log('Produkty načteny z databáze:', result.products);
+                    return result.products;
+                } else {
+                    console.error('Chyba při načítání produktů:', result.message);
+                    return null;
+                }
+            } catch (error) {
+                console.error('Chyba při načítání produktů:', error);
+                return null;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            loadProductsFromDatabase();
+            console.log('Webová stránka načtena s připojením k databázi MySQL');
+        });
+    </script>
+</body>
+</html>
